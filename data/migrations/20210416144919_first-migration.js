@@ -22,14 +22,28 @@ exports.up = function(knex) {
                 .notNullable()
                 .references("project_id")
                 .inTable("projects")
-                .onDelete("RESTRICT")
+                .onDelete("RESTRICT");
         })
-        .createTable()
+        .createTable("project_resources", tbl => {
+            tbl.increments("proj_resource_id");
+            tbl.integer("project_id")
+                .unsigned()
+                .notNullable()
+                .references("project_id")
+                .inTable("projects")
+                .onDelete("RESTRICT");
+            tbl.integer("resource_id")
+                .unsigned()
+                .notNullable()
+                .references("resource_id")
+                .inTable("resources")
+                .onDelete("RESTRICT");
+        })
 };
 
 exports.down = function(knex) {
     return knex.schema
-        .dropTableIfExists()
+        .dropTableIfExists("project_resources")
         .dropTableIfExists("tasks")
         .dropTableIfExists("resources")
         .dropTableIfExists("projects")
