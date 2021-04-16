@@ -9,9 +9,9 @@ const server = express();
 server.use(express.json());
 server.use('/api/projects', projectsRouter);
 server.use('/api/resources', resourcesRouter);
-// server.use('/api/tasts', tasksRouter);
+server.use('/api/tasks', tasksRouter);
 
-server.use((err, _, res, next) => {
+server.use((err, _, res, next) => { //eslint-disable-line
     res.status(500).json({
         message: err.message,
         stack: err.stack
